@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import org.controlsfx.control.NotificationPane?>
+<?import org.controlsfx.control.StatusBar?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="500.0" prefWidth="800.0"
+            xmlns="http://javafx.com/javafx/8"
+            fx:controller="com.xyf.themepacker.MainController">
+
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <Menu text="编辑">
+                <MenuItem mnemonicParsing="false" text="加载配置文件" onAction="#onClickLoadConfig"/>
+            </Menu>
+        </MenuBar>
+    </top>
+
+    <center>
+        <NotificationPane fx:id="notificationPane" showFromTop="false">
+            <content>
+
+                <BorderPane>
+
+                    <bottom>
+                        <StatusBar BorderPane.alignment="CENTER" text="" fx:id="statusBar">
+                            <leftItems>
+                                <Button mnemonicParsing="false" text="开始打包主题" onAction="#onClickStartPackTheme"
+                                        fx:id="startPackThemeView"/>
+                            </leftItems>
+                        </StatusBar>
+                    </bottom>
+
+                    <center>
+                        <TreeView fx:id="packListView"/>
+                    </center>
+
+                </BorderPane>
+
+            </content>
+        </NotificationPane>
+    </center>
+
+</BorderPane>
+
+
