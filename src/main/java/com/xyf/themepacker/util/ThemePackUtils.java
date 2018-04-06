@@ -2,9 +2,9 @@ package com.xyf.themepacker.util;
 
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
+import com.xyf.common.annotation.WorkThread;
 import com.xyf.common.util.FileUtils2;
 import com.xyf.common.util.ImageUtils;
-import com.xyf.common.util.WorkThread;
 import com.xyf.themepacker.bean.FixConfigBean;
 import com.xyf.themepacker.bean.PackTaskListBean;
 import io.reactivex.annotations.NonNull;
