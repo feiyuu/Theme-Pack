@@ -1,5 +1,6 @@
 package com.xyf.themepacker;
 
+import com.xyf.common.util.Lg;
 import com.xyf.common.util.ViewUtils;
 import com.xyf.themepacker.bean.PackTaskListBean;
 import com.xyf.themepacker.util.ThemePackUtils;
@@ -26,7 +27,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+    private static final String TAG = "MainController";
 
     @FXML
     public Button startPackThemeView;
@@ -79,7 +80,7 @@ public class MainController implements Initializable {
                     ThemePackUtils.packTheme(packTask);
                     successCount++;
                 } catch (Exception e) {
-                    LOGGER.error(packTask.name + " pack failed", e);
+                    Lg.e(TAG, "pack failed", packTask.name, e);
                     failCount++;
                 }
                 observableEmitter.onNext(new PackProgress(successCount + failCount, packTaskListBean.list.size(), successCount, failCount));
@@ -102,6 +103,8 @@ public class MainController implements Initializable {
         if (file == null) {
             return;
         }
+
+        configFile = file;
 
         Disposable disposable = Observable.fromCallable(() -> ThemePackUtils.loadTaskList(file))
                 .subscribeOn(Schedulers.io())

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.xyf.common.annotation.WorkThread;
 import com.xyf.common.util.FileUtils2;
 import com.xyf.common.util.ImageUtils;
+import com.xyf.common.util.Lg;
 import com.xyf.themepacker.bean.FixConfigBean;
 import com.xyf.themepacker.bean.PackTaskListBean;
 import io.reactivex.annotations.NonNull;
@@ -12,6 +13,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.NameFileFilter;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +34,7 @@ import java.util.List;
 
 public class ThemePackUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ThemePackUtils.class);
+    private static final String TAG = "ThemePackUtils";
 
     @WorkThread
     private static void checkDirectory(@Nonnull File directory) throws IOException {
@@ -78,9 +80,9 @@ public class ThemePackUtils {
 
         //
         if (task.scale600p) {
-            final Collection<File> files = FileUtils.listFiles(directory, new NameFileFilter(ImageUtils.IMAGE_SUFFIX), null);
+            final Collection<File> files = FileUtils.listFiles(directory, new SuffixFileFilter(ImageUtils.IMAGE_SUFFIX), null);
             for (File file : files) {
-                scale(file, 0.5);
+                scale(file, 0.96);
             }
         }
     }
@@ -217,7 +219,7 @@ public class ThemePackUtils {
         try (FileReader fileReader = new FileReader(file)) {
             return new Gson().fromJson(fileReader, PackTaskListBean.class);
         } catch (Exception e) {
-            LOGGER.error(file + " load failed", e);
+            Lg.e(TAG, "load failed", file, e);
         }
 
         PackTaskListBean packTaskListBean = new PackTaskListBean();
@@ -225,13 +227,15 @@ public class ThemePackUtils {
         return packTaskListBean;
     }
 
-    public static void scale(@NonNull File fromImage, double scale) throws IOException {
+    private static void scale(@NonNull File fromImage, double scale) throws IOException {
         BufferedImage original = ImageIO.read(fromImage);
         BufferedImage fixImage = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D canvas = (Graphics2D) fixImage.getGraphics();
-        canvas.translate((1 - scale) * fixImage.getWidth() / 2, 0);
-        canvas.scale(scale, 1);
-        canvas.drawImage(original, 0, 0, fixImage.getWidth(), fixImage.getHeight(), null);
+        canvas.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        canvas.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        final double x = (1 - scale) * fixImage.getWidth() / 2;
+        final double width = scale * fixImage.getWidth();
+        canvas.drawImage(original, (int) Math.round(x), 0, (int) Math.floor(width), fixImage.getHeight(), null);
         ImageIO.write(fixImage, FilenameUtils.getExtension(fromImage.getName()), fromImage);
     }
 
