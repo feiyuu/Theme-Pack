@@ -99,7 +99,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void onClickLoadConfig() {
-        File file = ViewUtils.openFile("打开配置文件", "json文档( *.xtzjson)", " *.xtzjson");
+        File file = ViewUtils.openFile("打开配置文件", "json文档( *.json)", " *.json");
         if (file == null) {
             return;
         }

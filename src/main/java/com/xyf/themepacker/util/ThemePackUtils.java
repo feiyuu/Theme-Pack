@@ -48,7 +48,7 @@ public class ThemePackUtils {
 
         for (File file : files) {
             if (file.isDirectory()) {
-                throw new IOException(directory + " should not contain directory");
+                Lg.e(TAG, "should not contain directory, will delete this", file);
             }
         }
     }
@@ -73,7 +73,44 @@ public class ThemePackUtils {
 
         rename(directory, Arrays.asList("泊车影像.png", "launcher_icon_泊车.png"), "ecarx.camera.calibration.MainActivity@ecarx.camera.calibration.middle.png");
         rename(directory, "e路通.png", "com.ecarx.eline.png");
+        rename(directory, "app_icon_violate.png", "ecarx.mycar.png");
         rename(directory, "ecarx.hvac.png", "ecarx.hvac.app.png");
+        rename(directory, "小咖.png", "com.ecarx.shortcut.sc.png");
+        rename(directory, "app_icon__小咖.png", "com.ecarx.shortcut.sc.png");
+        rename(directory, "launcher_icon_伴听.png", "cn.com.ecarx.xiaoka.carmusic.png");
+        rename(directory, "app_icon_music.png", "cn.com.ecarx.xiaoka.carmusic.png");
+        rename(directory, "launcher_icon_autoscure.png", "ecarx.autosecure.png");
+        rename(directory, "app_icon_carkeeper.png", "ecarx.autosecure.png");
+        rename(directory, "launcher_icon_AVM.png", "ecarx.camera.calibration.png");
+        rename(directory, "app_icon_360.png", "ecarx.camera.calibration.png");
+        rename(directory, "launcher_icon_dvr.png", "ecarx.camera.dvr.png");
+        rename(directory, "app_icon_dvr.png", "ecarx.camera.dvr.png");
+        rename(directory, "launcher_icon_eline.png", "com.ecarx.eline.png");
+        rename(directory, "app_icon_eline.png", "com.ecarx.eline.png");
+        rename(directory, "launcher_icon_gallery.png", "ecarx.photo.png");
+        rename(directory, "app_icon_gallery.png", "ecarx.photo.png");
+        rename(directory, "launcher_icon_membercenter.png", "ecarx.membercenter.png");
+        rename(directory, "app_icon_member center2.png", "ecarx.membercenter.png");
+        rename(directory, "launcher_icon_mycar.png", "ecarx.mycar.png");
+        rename(directory, "launcher_icon_navigation.png", "com.autonavi.auto.remote.fill.UsbFillActivity@com.autonavi.amapauto.png");
+        rename(directory, "app_icon_nav.png", "com.autonavi.auto.remote.fill.UsbFillActivity@com.autonavi.amapauto.png");
+        rename(directory, "launcher_icon_news.png", "ecarx.news.png");
+        rename(directory, "app_icon_news.png", "ecarx.news.png");
+        rename(directory, "launcher_icon_phone.png", "com.ecarx.btphone.png");
+        rename(directory, "app_icon_phone.png", "com.ecarx.btphone.png");
+        rename(directory, "launcher_icon_setting.png", "ecarx.settings.png");
+        rename(directory, "app_icon_setting.png", "ecarx.settings.png");
+        rename(directory, "launcher_icon_store.png", "com.ecarx.store.png");
+        rename(directory, "app_icon_store.png", "com.ecarx.store.png");
+        rename(directory, "launcher_icon_theme.png", "com.ecarx.thememanager.png");
+        rename(directory, "app_icon_theme.png", "com.ecarx.thememanager.png");
+        rename(directory, "launcher_icon_wallet.png", "com.ecarx.wallet.png");
+        rename(directory, "app_icon_wallet.png", "com.ecarx.wallet.png");
+        rename(directory, "launcher_icon_weather.png", "ecarx.weather.png");
+        rename(directory, "app_icon_weather.png", "ecarx.weather.png");
+        rename(directory, "net.easyconn.png.png", "net.easyconn.png");
+
+        copy(directory, "ecarx.photo.png", "ecarx.gallery.png");
         copy(directory, "com.ecarx.store.png", "com.ecarx.appstore.png");
         copy(directory, "com.tpopration.roprocam.png", "ecarx.camera.dvr.png");
         copy(directory, "ecarx.camera.dvr.png", "com.tpopration.roprocam.png");
