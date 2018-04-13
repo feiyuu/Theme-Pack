@@ -100,19 +100,17 @@ public class ThemePackUtils {
         rename(directory, "app_icon_phone.png", "com.ecarx.btphone.png");
         rename(directory, "launcher_icon_setting.png", "ecarx.settings.png");
         rename(directory, "app_icon_setting.png", "ecarx.settings.png");
-        rename(directory, "launcher_icon_store.png", "com.ecarx.store.png");
-        rename(directory, "app_icon_store.png", "com.ecarx.store.png");
-        rename(directory, "launcher_icon_theme.png", "com.ecarx.thememanager.png");
-        rename(directory, "app_icon_theme.png", "com.ecarx.thememanager.png");
+        rename(directory, Arrays.asList("app_icon_store.png", "launcher_icon_store.png"), "com.ecarx.store.png");
+        rename(directory, Arrays.asList("app_icon_theme.png", "app_icon_theme .png", "launcher_icon_theme.png"), "com.ecarx.thememanager.png");
         rename(directory, "launcher_icon_wallet.png", "com.ecarx.wallet.png");
         rename(directory, "app_icon_wallet.png", "com.ecarx.wallet.png");
         rename(directory, "launcher_icon_weather.png", "ecarx.weather.png");
         rename(directory, "app_icon_weather.png", "ecarx.weather.png");
         rename(directory, "net.easyconn.png.png", "net.easyconn.png");
 
+        // 同一个应用
         copy(directory, "ecarx.photo.png", "ecarx.gallery.png");
         copy(directory, "com.ecarx.store.png", "com.ecarx.appstore.png");
-        copy(directory, "com.tpopration.roprocam.png", "ecarx.camera.dvr.png");
         copy(directory, "ecarx.camera.dvr.png", "com.tpopration.roprocam.png");
 
         //
