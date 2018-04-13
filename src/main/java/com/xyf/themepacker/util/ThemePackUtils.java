@@ -37,7 +37,7 @@ public class ThemePackUtils {
     private static final String TAG = "ThemePackUtils";
 
     @WorkThread
-    private static void checkDirectory(@Nonnull File directory) throws IOException {
+    private static void checkDirectory(@Nonnull File directory) {
         Preconditions.checkArgument(FileUtils2.isDirectory(directory));
         clearHiddenFile(directory);
 
@@ -165,14 +165,6 @@ public class ThemePackUtils {
 
     @WorkThread
     public static boolean checkTaskOK(@NonNull PackTaskListBean.PackTask task) {
-        try {
-            checkDirectory(new File(task.iconDirectory));
-            checkDirectory(new File(task.previewDirectory));
-            checkDirectory(new File(task.appDirectory));
-        } catch (IOException ignored) {
-            return false;
-        }
-
         if (!FileUtils2.isFile(new File(task.wallpaperFile))) {
             return false;
         }
