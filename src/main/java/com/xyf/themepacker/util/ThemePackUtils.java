@@ -112,6 +112,7 @@ public class ThemePackUtils {
         copy(directory, "ecarx.photo.png", "ecarx.gallery.png");
         copy(directory, "com.ecarx.store.png", "com.ecarx.appstore.png");
         copy(directory, "ecarx.camera.dvr.png", "com.tpopration.roprocam.png");
+        copy(directory, "ecarx.vehicle.view.activity.BreakRuleActivity@ecarx.violationinquiry.png", "ecarx.mycar.png");
 
         //
         if (task.scale600p) {
