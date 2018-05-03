@@ -12,24 +12,32 @@ import io.reactivex.annotations.NonNull;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import org.zeroturnaround.zip.ZipUtil;
 
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
 
 public class ThemePackUtils {
@@ -230,8 +238,13 @@ public class ThemePackUtils {
         }
 
         {
-            final File description = new File(task.descriptionFile);
+
             final File descriptionTempFile = new File(tempDirectory, "description.xml");
+
+            File description = upDescriptionVersion(task.descriptionFile);
+            if (description == null) {
+                description = new File(task.descriptionFile);
+            }
             FileUtils.copyFile(description, descriptionTempFile);
         }
 
@@ -267,4 +280,34 @@ public class ThemePackUtils {
         ImageIO.write(fixImage, FilenameUtils.getExtension(fromImage.getName()), fromImage);
     }
 
+    public static File upDescriptionVersion(String descriptionPath) {
+        final File description = new File(descriptionPath);
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder;
+        try {
+            dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(description);
+            doc.getDocumentElement().normalize();
+
+            NodeList employees = doc.getElementsByTagName("XUI-Theme");
+            for (int i = 0; i < employees.getLength(); i++) {
+                Node name = doc.getElementsByTagName("version").item(0).getFirstChild();
+                name.setNodeValue((Integer.valueOf(name.getNodeValue().toUpperCase()) + 1) + "");
+            }
+
+            TransformerFactory tfactory = TransformerFactory.newInstance();
+            Transformer transformer = tfactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            File file = new File(descriptionPath);
+            StreamResult result = new StreamResult(file);
+            transformer.transform(source, result);
+            return file;
+
+        } catch (SAXException | ParserConfigurationException | IOException | TransformerException e1) {
+            e1.printStackTrace();
+        }
+        return null;
+    }
 }
+
