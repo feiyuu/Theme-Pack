@@ -242,7 +242,7 @@ public class ThemePackUtils {
             final File descriptionTempFile = new File(tempDirectory, "description.xml");
 
             File description = upDescriptionVersion(task.descriptionFile);
-            if (description == null) {
+            if (null == description) {
                 description = new File(task.descriptionFile);
             }
             FileUtils.copyFile(description, descriptionTempFile);
